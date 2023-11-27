@@ -167,6 +167,9 @@ sudo su
 apt update -y
 apt install apache2 -y
 echo "hello from $ ( hostname -f )" | sudo tee /var/www/html/index.html
+
+sudo apt install stress -y
+sudo stress --cpu 8 --timeout 200 
     </pre>
   </section>
 
