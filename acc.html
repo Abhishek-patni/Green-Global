@@ -93,7 +93,7 @@
       <li><a href="#section3">DOCKER</a></li>
       <li><a href="#section4">AUTO SCALING</a></li>
       <li><a href="#section5">SQL</a></li>
-      <!-- <li><a href="#section6">Button 6</a></li> -->
+      <li><a href="#section6">F-CODE</a></li>
     </ul>
   </nav>
 
@@ -189,12 +189,44 @@ echo "hello from $ ( hostname -f )" | sudo tee /var/www/html/index.html
     </pre>
   </section>
 
-  <!-- <section id="section6">
-    <h2>Section 6</h2>
+  <section id="section6">
+    <h2>F-CODE</h2>
     <pre>
-      Your code for section 6 goes here
+from __future__ import print_function
+import boto3
+import time, urllib
+import json
+
+
+print ("*"*80)
+print ("Initializing..")
+print ("*"*80)
+
+s3 = boto3.client('s3')
+
+def lambda_handler(event, context):
+    # TODO implement
+    source_bucket = event['Records'][0]['s3']['bucket']['name']
+    object_key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'])
+    target_bucket = 'icclabdestinationbucket'
+    copy_source = {'Bucket': source_bucket, 'Key': object_key}
+    print ("Source bucket : ", source_bucket)
+    print ("Target bucket : ", target_bucket)
+    print ("Log Stream name: ", context.log_stream_name)
+    print ("Log Group name: ", context.log_group_name)
+    print ("Request ID: ", context.aws_request_id)
+    print ("Mem. limits(MB): ", context.memory_limit_in_mb)
+    try:
+        print ("Using waiter to waiting for object to persist through s3 service")
+        waiter = s3.get_waiter('object_exists')
+        waiter.wait(Bucket=source_bucket, Key=object_key)
+        s3.copy_object(Bucket=target_bucket, Key=object_key, CopySource=copy_source)
+        return response['ContentType']
+    except Exception as err:
+        print ("Error -"+str(err))
+        return e
     </pre>
-  </section> -->
+  </section>
 <footer style="text-align: center;">
   <h2 style="color: red;"><b>Thank you!</b></h2>
 </footer>
