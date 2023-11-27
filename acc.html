@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <title>Abhishek</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+    position: fixed;
+    margin-top: 20px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
+
+    nav ul {
+      display: flex;
+      /* Added this line */
+      justify-content: center;
+      /* Added this line */
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav.scrolled {
+      background-color: #555;
+      /* Added this line for animation */
+    }
+
+    nav h1 {
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      background-color: #555;
+    }
+
+    nav ul li a:hover {
+      background-color: #777;
+    }
+
+    section {
+      padding: 20px;
+      margin-top: 40px;
+      /* Added this line to create space below the fixed navbar */
+    }
+
+    section h3 {
+      margin-top: 0;
+    }
+
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="#section1">C CODE</a></li>
+      <li><a href="#section2">LAMBDA</a></li>
+      <li><a href="#section3">DOCKER</a></li>
+      <li><a href="#section4">AUTO SCALING</a></li>
+      <li><a href="#section5">SQL</a></li>
+      <!-- <li><a href="#section6">Button 6</a></li> -->
+    </ul>
+  </nav>
+
+  <section id="section1">
+    <h3>C code to add two number</h3>
+    <pre>
+#include stdio.h>
+
+int main() {
+    int num1, num2, sum;
+
+    // Ask the user to enter the first number
+    printf("Enter the first number: ");
+    scanf("%d", &num1);
+
+    // Ask the user to enter the second number
+    printf("Enter the second number: ");
+    scanf("%d", &num2);
+
+    // Adding the two numbers
+    sum = num1 + num2;
+
+    // Displaying the result
+    printf("The sum of %d and %d is: %d\n", num1, num2, sum);
+
+    return 0;
+}
+
+    </pre>
+  </section>
+
+  <section id="section2">
+    <h3>Lambda code</h3>
+    <pre>
+import boto3
+import json
+s3 = boto3.resource('s3')
+def lambda_handler (event, context):
+ bucket = s3.Bucket('bca-sdw-23')
+ dest_bucket=s3.Bucket('destination-bucket2190')
+ print(dest_bucket)
+ print(bucket)
+ for obj in bucket.objects.filter(Prefix='images/',Delimiter='/'):
+  dest_key=obj.key
+  print(dest_key)
+  print('copy file ' + dest_key)
+  s3.Object(dest_bucket.name, dest_key).copy_from(CopySource= {'Bucket': obj.bucket_name, 'Key': obj.key})
+  print('delete file from source bucket ' + dest_key)
+  s3.Object(bucket.name, obj.key).delete()
+    </pre>
+  </section>
+
+  <section id="section3">
+    <h3>Container images</h3>
+    <pre>
+      Sudo yum update -y
+      Sudo yum install -y docker
+      Sudo service docker Start
+      Sudo Docker pull nginx
+      Sudo Docker run -d -p 80:80 nginx
+      Sudo Docker images
+      Sudo Docker ps
+    </pre>
+  </section>
+
+  <section id="section4">
+    <h3>Auto scaling</h3>
+    <pre>
+#!/bin/bash
+sudo su
+apt update -y
+apt install apache2 -y
+echo "hello from $ ( hostname -f )" | sudo tee /var/www/html/index.html
+    </pre>
+  </section>
+
+  <section id="section5">
+    <h3>Database</h3>
+    <pre>
+      CREATE DATABASE IF NOT EXISTS databasename;
+      USE databasename;
+      CREATE TABLE IF NOT EXISTS Persons (
+          PersonID int,
+          LastName varchar(255),
+          FirstName varchar(255),
+          Address varchar(255),
+          City varchar(255)
+      );
+      INSERT INTO Persons (PersonID, LastName, FirstName, Address, City)
+      VALUES (1, 'Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger');
+      SELECT * FROM Persons;
+      
+    </pre>
+  </section>
+
+  <!-- <section id="section6">
+    <h2>Section 6</h2>
+    <pre>
+      Your code for section 6 goes here
+    </pre>
+  </section> -->
+<footer style="text-align: center;">
+  <h2 style="color: red;"><b>Thank you!</b></h2>
+</footer>
+</body>
+
+</html>
