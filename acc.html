@@ -90,7 +90,7 @@
     <ul>
       <li><a href="#section1">yml code</a></li>
       <li><a href="#section2">LAMBDA</a></li>
-      <!-- <li><a href="#section3">DOCKER</a></li> -->
+      <li><a href="#section3">EC2 yml</a></li>
       <li><a href="#section4">AUTO SCALING</a></li>
       <li><a href="#section5">SQL</a></li>
       <!-- <li><a href="#section6">F-CODE</a></li> -->
@@ -364,18 +364,62 @@ def lambda_handler (event, context):
     </pre>
   </section>
 
-  <!-- <section id="section3">
+  <section id="section3">
     <h3>Auto scaling</h3>
     <pre>
-      Sudo yum update -y
-      Sudo yum install -y docker
-      Sudo service docker Start
-      Sudo Docker pull nginx
-      Sudo Docker run -d -p 80:80 nginx
-      Sudo Docker images
-      Sudo Docker ps
+Parameters:
+  Environment:
+    Type: String
+    AllowedValues:
+      - Development
+      - Production
+      - QA
+    Description: Select your Environment
+  myKeyPair: 
+    Description: Amazon EC2 Key Pair
+    Type: "AWS::EC2::KeyPair::KeyName"
+
+Mappings:
+  EnvMap:
+    Development:
+      instanceType: "t2.large"
+      name: "Devoplement"
+    Production:
+      instanceType: "t2.medium"
+      name: "Production"
+    QA:
+      instanceType: "t2.xlarge"
+      name: "Prod"
+
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: ap-south-1a
+      InstanceType: !FindInMap [EnvMap, !Ref Environment, instanceType]
+      KeyName: !Ref myKeyPair
+      ImageId: ami-0a7cf821b91bcccbc
+      Tags:
+        - Key: "Name"
+          Value: !FindInMap [EnvMap, !Ref Environment, name]
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH and http  
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
     </pre>
-  </section> -->
+  </section>
 
   <section id="section4">
     <h3>Auto scaling</h3>
